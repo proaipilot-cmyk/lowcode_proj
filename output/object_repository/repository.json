@@ -1,0 +1,219 @@
+{
+  "pages": {
+    "login_page": {
+      "url_pattern": "*/pulse/S3/login",
+      "elements": {
+        "requestverificationtoken": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "[name='__RequestVerificationToken']",
+          "description": "__RequestVerificationToken"
+        },
+        "here": {
+          "type": "link",
+          "locator_type": "get_by_text",
+          "locator_value": "here.",
+          "description": "here."
+        },
+        "enter_your_email": {
+          "type": "input",
+          "locator_type": "get_by_placeholder",
+          "locator_value": "Enter your email",
+          "description": "Enter your email"
+        },
+        "preventautopass": {
+          "type": "input",
+          "locator_type": "css",
+          "locator_value": "#preventAutoPass",
+          "description": "preventAutoPass"
+        },
+        "enter_your_password": {
+          "type": "input",
+          "locator_type": "get_by_placeholder",
+          "locator_value": "Enter your password",
+          "description": "Enter your password"
+        },
+        "redirecturl": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "#RedirectUrl",
+          "description": "RedirectUrl"
+        },
+        "rememberme": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "#RememberMe",
+          "description": "RememberMe"
+        },
+        "remembermedummy": {
+          "type": "checkbox",
+          "locator_type": "css",
+          "locator_value": "#RememberMeDummy",
+          "description": "RememberMeDummy"
+        },
+        "proceed": {
+          "type": "button",
+          "locator_type": "css",
+          "locator_value": "#proceed",
+          "description": "proceed"
+        },
+        "flagfield": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "#flagfield",
+          "description": "flagfield"
+        },
+        "forgot_password": {
+          "type": "link",
+          "locator_type": "get_by_text",
+          "locator_value": "Forgot Password",
+          "description": "Forgot Password"
+        },
+        "re_enter_your_email": {
+          "type": "input",
+          "locator_type": "get_by_placeholder",
+          "locator_value": "Re-enter your email",
+          "description": "Re-enter your email"
+        },
+        "app": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "#appforgotPassword",
+          "description": "app"
+        },
+        "requestedurl": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "#requestedUrlforgotPassword",
+          "description": "requestedUrl"
+        },
+        "company": {
+          "type": "element",
+          "locator_type": "css",
+          "locator_value": "#companyforgotPassword",
+          "description": "company"
+        },
+        "back_to_login": {
+          "type": "link",
+          "locator_type": "get_by_text",
+          "locator_value": "Back to Login",
+          "description": "Back to Login"
+        },
+        "privacy_policy": {
+          "type": "link",
+          "locator_type": "get_by_text",
+          "locator_value": "Privacy Policy",
+          "description": "Privacy Policy"
+        },
+        "cookie_notice": {
+          "type": "link",
+          "locator_type": "get_by_text",
+          "locator_value": "Cookie Notice",
+          "description": "Cookie Notice"
+        },
+        "accept_recommended_btn_handler": {
+          "type": "button",
+          "locator_type": "css",
+          "locator_value": "#accept-recommended-btn-handler",
+          "description": "accept-recommended-btn-handler"
+        },
+        "vendor_details_button_opens_vendor_list_menu": {
+          "type": "button",
+          "locator_type": "get_by_label",
+          "locator_value": "Vendor Details button opens Vendor List menu",
+          "description": "Vendor Details button opens Vendor List menu"
+        },
+        "back": {
+          "type": "button",
+          "locator_type": "get_by_label",
+          "locator_value": "Back",
+          "description": "Back"
+        },
+        "vendor_search_handler": {
+          "type": "input",
+          "locator_type": "css",
+          "locator_value": "#vendor-search-handler",
+          "description": "vendor-search-handler"
+        },
+        "filter": {
+          "type": "button",
+          "locator_type": "get_by_label",
+          "locator_value": "Filter",
+          "description": "Filter"
+        },
+        "clear_filters_handler": {
+          "type": "button",
+          "locator_type": "css",
+          "locator_value": "#clear-filters-handler",
+          "description": "clear-filters-handler"
+        },
+        "chkbox_id": {
+          "type": "checkbox",
+          "locator_type": "css",
+          "locator_value": "#chkbox-id",
+          "description": "chkbox-id"
+        },
+        "filter_apply_handler": {
+          "type": "button",
+          "locator_type": "css",
+          "locator_value": "#filter-apply-handler",
+          "description": "filter-apply-handler"
+        },
+        "filter_cancel_handler": {
+          "type": "button",
+          "locator_type": "css",
+          "locator_value": "#filter-cancel-handler",
+          "description": "filter-cancel-handler"
+        },
+        "select_all_hosts_groups_handler": {
+          "type": "checkbox",
+          "locator_type": "css",
+          "locator_value": "#select-all-hosts-groups-handler",
+          "description": "select-all-hosts-groups-handler"
+        },
+        "select_all_vendor_groups_handler": {
+          "type": "checkbox",
+          "locator_type": "css",
+          "locator_value": "#select-all-vendor-groups-handler",
+          "description": "select-all-vendor-groups-handler"
+        },
+        "select_all_vendor_leg_handler": {
+          "type": "checkbox",
+          "locator_type": "css",
+          "locator_value": "#select-all-vendor-leg-handler",
+          "description": "select-all-vendor-leg-handler"
+        },
+        "select_and_proceed": {
+          "type": "button",
+          "locator_type": "get_by_text",
+          "locator_value": "Select and proceed",
+          "description": "Select and proceed"
+        },
+        "powered_by_onetrust_opens_in_a_new_tab": {
+          "type": "link",
+          "locator_type": "get_by_label",
+          "locator_value": "Powered by OneTrust Opens in a new Tab",
+          "description": "Powered by OneTrust Opens in a new Tab"
+        },
+        "onetrust_accept_btn_handler": {
+          "type": "button",
+          "locator_type": "css",
+          "locator_value": "#onetrust-accept-btn-handler",
+          "description": "onetrust-accept-btn-handler"
+        },
+        "username": {
+          "type": "input",
+          "locator_type": "get_by_placeholder",
+          "locator_value": "Enter your email",
+          "description": "username"
+        },
+        "log_in": {
+          "type": "button",
+          "locator_type": "get_by_role",
+          "locator_value": "button, name=Log in",
+          "description": "Log in"
+        }
+      }
+    }
+  }
+}

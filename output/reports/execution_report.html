@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Execution Report</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 2rem; background: #f5f5f5; }
+        h1 { color: #1a1a2e; }
+        .summary { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .summary-card { padding: 1rem 1.5rem; border-radius: 8px; color: #fff; font-size: 1.1rem; }
+        .card-total { background: #2d3436; }
+        .card-pass { background: #00b894; }
+        .card-fail { background: #d63031; }
+        .card-skip { background: #fdcb6e; color: #2d3436; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th { background: #1a1a2e; color: #fff; padding: 0.75rem; text-align: left; }
+        td { padding: 0.75rem; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f8f9fa; }
+        .status-pass { color: #00b894; font-weight: 600; }
+        .status-fail { color: #d63031; font-weight: 600; }
+        .status-skip { color: #f39c12; font-weight: 600; }
+        .error-text { color: #d63031; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Execution Report</h1>
+    <p>Generated: 2026-04-02 15:42:30</p>
+    <div class="summary">
+        <div class="summary-card card-total">Total: 1</div>
+        <div class="summary-card card-pass">Passed: 0</div>
+        <div class="summary-card card-fail">Failed: 0</div>
+        <div class="summary-card card-skip">Skipped: 1</div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Step</th>
+                <th>Action</th>
+                <th>Page</th>
+                <th>Status</th>
+                <th>Error</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>1, Go to https://stg-pulse.gartner.com/pulse</td>
+            <td>unknown</td>
+            <td>unknown_page</td>
+            <td class="status-skip">SKIPPED</td>
+            <td><span class="error-text">Unknown action: unknown</span></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

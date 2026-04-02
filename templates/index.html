@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Test Automation Tool</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Agentic Test Automation</h1>
+            <p class="subtitle">Playwright Python &bull; Page Object Model &bull; Auto-Generated Tests</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <div class="section-header">
+                    <h2>📝 Test Steps</h2>
+                    <div class="controls">
+                        <label class="toggle" title="Run browser visibly">
+                            <input type="checkbox" id="headedToggle">
+                            <span class="toggle-label">Headed Mode</span>
+                        </label>
+                        <button id="previewBtn" class="btn btn-secondary" title="Preview parsed steps">Preview</button>
+                        <button id="runBtn" class="btn btn-primary" title="Execute steps and generate artifacts">
+                            <span class="btn-icon">▶</span> Run
+                        </button>
+                    </div>
+                </div>
+                <textarea id="stepsInput" placeholder="Enter your test steps here, one per line. Examples:
+
+1. Go to https://example.com/login
+2. Enter 'admin' in username field
+3. Enter 'password123' in password field
+4. Click Login button
+5. Verify dashboard page is displayed
+6. Click on Reports link
+7. Verify Reports page loads"></textarea>
+                <div class="hint">
+                    Supported actions: <strong>go to / navigate</strong>, <strong>enter / type / fill</strong>,
+                    <strong>click / press</strong>, <strong>select / choose</strong>, <strong>hover</strong>,
+                    <strong>verify / check / assert</strong>, <strong>wait</strong>
+                </div>
+            </section>
+
+            <div id="statusBar" class="status-bar hidden">
+                <div class="spinner"></div>
+                <span id="statusText">Processing...</span>
+            </div>
+
+            <section id="resultsSection" class="results-section hidden">
+                <div class="tabs">
+                    <button class="tab active" data-tab="parsed">Parsed Steps</button>
+                    <button class="tab" data-tab="execution">Execution Log</button>
+                    <button class="tab" data-tab="repository">Object Repository</button>
+                    <button class="tab" data-tab="tree">Project Tree</button>
+                    <button class="tab" data-tab="commands">Commands</button>
+                </div>
+
+                <div id="tab-parsed" class="tab-content active">
+                    <div id="parsedOutput" class="output-block"></div>
+                </div>
+                <div id="tab-execution" class="tab-content">
+                    <div id="executionOutput" class="output-block"></div>
+                </div>
+                <div id="tab-repository" class="tab-content">
+                    <div id="repoOutput" class="output-block"></div>
+                </div>
+                <div id="tab-tree" class="tab-content">
+                    <pre id="treeOutput" class="output-block tree-block"></pre>
+                </div>
+                <div id="tab-commands" class="tab-content">
+                    <div id="commandsOutput" class="output-block"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Agentic Test Automation Tool &mdash; Playwright Python + Page Object Model</p>
+        </footer>
+    </div>
+
+    <script>
+        const stepsInput = document.getElementById('stepsInput');
+        const runBtn = document.getElementById('runBtn');
+        const previewBtn = document.getElementById('previewBtn');
+        const headedToggle = document.getElementById('headedToggle');
+        const statusBar = document.getElementById('statusBar');
+        const statusText = document.getElementById('statusText');
+        const resultsSection = document.getElementById('resultsSection');
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        previewBtn.addEventListener('click', async () => {
+            const steps = stepsInput.value.trim();
+            if (!steps) { alert('Please enter test steps.'); return; }
+
+            showStatus('Parsing steps...');
+            try {
+                const resp = await fetch('/api/parse', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ steps })
+                });
+                const data = await resp.json();
+                renderParsedSteps(data.parsed_steps);
+                resultsSection.classList.remove('hidden');
+                document.querySelector('[data-tab="parsed"]').click();
+            } catch (err) {
+                alert('Parse error: ' + err.message);
+            } finally {
+                hideStatus();
+            }
+        });
+
+        runBtn.addEventListener('click', async () => {
+            const steps = stepsInput.value.trim();
+            if (!steps) { alert('Please enter test steps.'); return; }
+
+            runBtn.disabled = true;
+            showStatus('Launching browser agent — navigating, discovering elements, generating code...');
+
+            try {
+                const resp = await fetch('/api/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ steps, headless: !headedToggle.checked })
+                });
+                const data = await resp.json();
+
+                if (data.status === 'error') {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+
+                renderParsedSteps(data.parsed_steps);
+                renderExecutionLog(data.execution_log);
+                renderRepository(data.repository);
+                renderTree(data.project_tree);
+                renderCommands(data.commands);
+
+                resultsSection.classList.remove('hidden');
+                document.querySelector('[data-tab="execution"]').click();
+            } catch (err) {
+                alert('Error: ' + err.message);
+            } finally {
+                runBtn.disabled = false;
+                hideStatus();
+            }
+        });
+
+        function showStatus(msg) {
+            statusText.textContent = msg;
+            statusBar.classList.remove('hidden');
+        }
+        function hideStatus() {
+            statusBar.classList.add('hidden');
+        }
+
+        function renderParsedSteps(steps) {
+            const el = document.getElementById('parsedOutput');
+            let html = '<table><thead><tr><th>#</th><th>Action</th><th>Target</th><th>Value</th><th>Original</th></tr></thead><tbody>';
+            steps.forEach(s => {
+                html += `<tr>
+                    <td>${s.step_number}</td>
+                    <td><span class="badge badge-${s.action}">${s.action}</span></td>
+                    <td>${s.target || s.url || '-'}</td>
+                    <td>${s.value || '-'}</td>
+                    <td class="muted">${s.original_text}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            el.innerHTML = html;
+        }
+
+        function renderExecutionLog(log) {
+            const el = document.getElementById('executionOutput');
+            const total = log.length;
+            const passed = log.filter(e => e.status === 'passed').length;
+            const failed = log.filter(e => e.status === 'failed').length;
+
+            let html = `<div class="summary-cards">
+                <div class="card card-total">Total: ${total}</div>
+                <div class="card card-pass">Passed: ${passed}</div>
+                <div class="card card-fail">Failed: ${failed}</div>
+            </div>`;
+            html += '<table><thead><tr><th>#</th><th>Step</th><th>Page</th><th>Status</th><th>Error</th></tr></thead><tbody>';
+            log.forEach(e => {
+                const cls = e.status === 'passed' ? 'status-pass' : e.status === 'failed' ? 'status-fail' : 'status-skip';
+                html += `<tr>
+                    <td>${e.step_number}</td>
+                    <td>${e.original_text}</td>
+                    <td>${e.page_name}</td>
+                    <td class="${cls}">${e.status.toUpperCase()}</td>
+                    <td class="error-text">${e.error || '-'}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            el.innerHTML = html;
+        }
+
+        function renderRepository(repo) {
+            const el = document.getElementById('repoOutput');
+            let html = '';
+            for (const [pageName, pageData] of Object.entries(repo.pages || {})) {
+                html += `<div class="repo-page"><h3>📄 ${pageName}</h3><p class="muted">URL: ${pageData.url_pattern}</p>`;
+                html += '<table><thead><tr><th>Element</th><th>Type</th><th>Locator</th><th>Value</th></tr></thead><tbody>';
+                for (const [elName, elData] of Object.entries(pageData.elements || {})) {
+                    html += `<tr>
+                        <td><strong>${elName}</strong></td>
+                        <td><span class="badge">${elData.type}</span></td>
+                        <td>${elData.locator_type}</td>
+                        <td><code>${elData.locator_value}</code></td>
+                    </tr>`;
+                }
+                html += '</tbody></table></div>';
+            }
+            el.innerHTML = html || '<p class="muted">No repository data yet.</p>';
+        }
+
+        function renderTree(tree) {
+            document.getElementById('treeOutput').textContent = tree || 'No output yet.';
+        }
+
+        function renderCommands(cmds) {
+            const el = document.getElementById('commandsOutput');
+            let html = '<div class="commands-list">';
+            html += `<div class="cmd-block"><h3>📦 Install Dependencies</h3><pre><code>${cmds.install}</code></pre></div>`;
+            html += `<div class="cmd-block"><h3>🧪 Run Tests (Headless)</h3><pre><code>${cmds.run_tests}</code></pre></div>`;
+            html += `<div class="cmd-block"><h3>👁️ Run Tests (Headed)</h3><pre><code>${cmds.run_headed}</code></pre></div>`;
+            html += '</div>';
+            el.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

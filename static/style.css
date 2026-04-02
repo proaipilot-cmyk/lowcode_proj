@@ -1,0 +1,389 @@
+/* === Base Reset & Typography === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* === Header === */
+header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #7c5cfc;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* === Input Section === */
+.input-section {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.section-header h2 {
+    font-size: 1.15rem;
+    color: #c0c0e0;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+textarea {
+    width: 100%;
+    min-height: 220px;
+    background: #12121e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9rem;
+    padding: 1rem;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #7c5cfc;
+    box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.15);
+}
+
+textarea::placeholder {
+    color: #555;
+}
+
+.hint {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.hint strong {
+    color: #888;
+}
+
+/* === Buttons === */
+.btn {
+    padding: 0.55rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #7c5cfc;
+    color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #6a4aee;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(124, 92, 252, 0.3);
+}
+
+.btn-secondary {
+    background: #2a2a4a;
+    color: #c0c0e0;
+    border: 1px solid #3a3a5a;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #3a3a5a;
+}
+
+.btn-icon {
+    font-size: 0.75rem;
+}
+
+/* === Toggle === */
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.toggle input[type="checkbox"] {
+    accent-color: #7c5cfc;
+    width: 16px;
+    height: 16px;
+}
+
+/* === Status Bar === */
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: #1e1e3a;
+    border: 1px solid #7c5cfc44;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    color: #b0b0d0;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #333;
+    border-top: 2px solid #7c5cfc;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.hidden { display: none !important; }
+
+/* === Tabs === */
+.tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0;
+    border-bottom: 2px solid #2a2a4a;
+    overflow-x: auto;
+}
+
+.tab {
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    color: #c0c0e0;
+}
+
+.tab.active {
+    color: #7c5cfc;
+    border-bottom-color: #7c5cfc;
+}
+
+/* === Tab Content === */
+.tab-content {
+    display: none;
+    padding: 1.25rem;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* === Results === */
+.results-section {
+    margin-top: 1.5rem;
+}
+
+/* === Tables === */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+thead th {
+    background: #12121e;
+    color: #888;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+tbody td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #222;
+}
+
+tbody tr:hover {
+    background: #1e1e35;
+}
+
+.status-pass { color: #00e676; font-weight: 600; }
+.status-fail { color: #ff5252; font-weight: 600; }
+.status-skip { color: #ffc107; font-weight: 600; }
+
+.error-text { color: #ff5252; font-size: 0.8rem; }
+.muted { color: #666; }
+
+/* === Badges === */
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #2a2a4a;
+    color: #b0b0d0;
+}
+
+.badge-navigate { background: #1a3a5c; color: #5ca8ff; }
+.badge-input { background: #1a4a3a; color: #5cffaa; }
+.badge-click { background: #4a1a3a; color: #ff5caa; }
+.badge-verify { background: #3a3a1a; color: #ffcc5c; }
+.badge-select { background: #2a1a4a; color: #aa5cff; }
+.badge-hover { background: #1a3a3a; color: #5cffdd; }
+.badge-wait { background: #3a2a1a; color: #ffaa5c; }
+.badge-unknown { background: #333; color: #888; }
+
+/* === Summary Cards === */
+.summary-cards {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.card {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.card-total { background: #2a2a4a; color: #e0e0e0; }
+.card-pass { background: #1a3a2a; color: #00e676; }
+.card-fail { background: #3a1a1a; color: #ff5252; }
+
+/* === Repository === */
+.repo-page {
+    margin-bottom: 1.5rem;
+}
+
+.repo-page h3 {
+    color: #c0c0e0;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.repo-page .muted {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+code {
+    background: #12121e;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    color: #7c5cfc;
+}
+
+/* === Tree === */
+.tree-block {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: #a0a0c0;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+/* === Commands === */
+.commands-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cmd-block h3 {
+    font-size: 0.95rem;
+    color: #c0c0e0;
+    margin-bottom: 0.5rem;
+}
+
+.cmd-block pre {
+    background: #12121e;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+}
+
+.cmd-block code {
+    background: transparent;
+    color: #00e676;
+    font-size: 0.85rem;
+    padding: 0;
+}
+
+/* === Footer === */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #222;
+    color: #555;
+    font-size: 0.8rem;
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+    .section-header { flex-direction: column; align-items: flex-start; }
+    .controls { width: 100%; justify-content: flex-end; }
+    .summary-cards { flex-wrap: wrap; }
+    .tabs { gap: 0; }
+    .tab { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+}
